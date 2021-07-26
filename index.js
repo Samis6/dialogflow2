@@ -19,11 +19,12 @@ app.listen(port,() =>{
 
 const dialogflowFullfillment =(request, response) => {
     const agent = new WebhookClient({request, response})
+    var soma = request.body.queryResult.parameters['number'] + request.body.queryResult.parameters['number1']
 
-    function sayHello(agent){
-        agent.add("Hi there, this response is coming from Heroku")
+    function Soma(agent){
+        agent.add("O resultado é: "+ soma)
     } 
     let intentMap = new Map();
-    intentMap.set("Default Welcome Intent", sayHello)
+    intentMap.set("Soma", Soma)
     agent.handleRequest(intentMap)
 }
