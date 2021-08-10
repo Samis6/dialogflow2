@@ -1,7 +1,7 @@
 const express = require('express')
 //const bodyParser = require('body-parser')
 const { request } = require('express')
-const {WebhookClient} = require('dialogflow-fulfillment');
+const {WebhookClient} = require('dialogflow-fulfillment'); 
 
 const app = express()
 //app.use(bodyParser.json())
@@ -21,14 +21,21 @@ const dialogflowFullfillment =(request, response) => {
     const agent = new WebhookClient({request, response})
     var soma = request.body.queryResult.parameters['number'] + request.body.queryResult.parameters['number1']
     var multi = request.body.queryResult.parameters['number'] * request.body.queryResult.parameters['number1']
+    var subi = request.body.queryResult.parameters['number'] - request.body.queryResult.parameters['number1']
     function Soma(agent){
         agent.add("O resultado é: "+ soma)
     } 
     function Multi(agent){
         agent.add("O resultado é: "+ multi)
     }
+    function Subi(agent){
+        agent.add("O resultado é: "+ subi)
+    }
+
     let intentMap = new Map();
     intentMap.set("Soma", Soma)
     intentMap.set("Multiply", Multi)
+    intentMap.set("Subtracao", Subi)
+
     agent.handleRequest(intentMap)
 }
